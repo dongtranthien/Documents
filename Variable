@@ -1,0 +1,8 @@
+Cách Add Variable User nhưng giống như Variable System:
+This dialog will show you your current user variables as well as the system variables. You may need to add a local PATH variable if you haven't already.
+
+To update your Path to include the Python 3.3 directory, for instance, click New:
+
+Variable Name: PATH Variable Value: %PATH%;C:\Python33
+
+This creates a local PATH by taking the current system PATH and adding to it.

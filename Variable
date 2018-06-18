@@ -6,3 +6,7 @@ To update your Path to include the Python 3.3 directory, for instance, click New
 Variable Name: PATH Variable Value: %PATH%;C:\Python33
 
 This creates a local PATH by taking the current system PATH and adding to it.
+
+
+
+https://stackoverflow.com/questions/33876657/how-to-install-python-any-version-in-windows-when-youve-no-admin-priviledges

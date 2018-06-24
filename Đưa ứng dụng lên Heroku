@@ -5,5 +5,5 @@
 5. Add project lên git heroku: git add .
 6. Commit: git commit -am "Upload"
 7. Push: git push heroku master
-8. Lưu ý: Mỗi khi deploy ứng dụng lên Heroku, nếu khởi chạy app trên web báo lỗi thì có thể dùng restart heroku: heroku restart
+8. Lưu ý: Mỗi khi deploy ứng dụng lên Heroku, nếu khởi chạy app trên web báo lỗi thì kiểm tra lại tên file phải là: app.py
 9. Nếu trường hợp không tìm được lỗi thì có thể xem logs từ web app: heroku logs --tail --app your_app_name

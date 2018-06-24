@@ -7,3 +7,7 @@
 7. Push: git push heroku master
 8. Lưu ý: Mỗi khi deploy ứng dụng lên Heroku, nếu khởi chạy app trên web báo lỗi thì kiểm tra lại tên file phải là: app.py
 9. Nếu trường hợp không tìm được lỗi thì có thể xem logs từ web app: heroku logs --tail --app your_app_name
+
+
+Nhiều lúc sử dụng thì localhost có khi ko update, khi đó vào CMD, tìm xem cổng localhost đang sử dụng có PID gì(cột cuối cùng) rồi delete đi, lệnh xem các cổng: netstat -a -o
+Xóa port: taskkill /f /pid 5092(pid cổng cần xóa)

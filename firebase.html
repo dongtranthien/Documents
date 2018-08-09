@@ -1,0 +1,87 @@
+<!doctype html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Shared checklist</title>
+        <meta name="description" content="A sample javascript web application to show how Firebase Realtime Database works">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="author" content="Anis uddin Ahmad <anis.programmer@gmail.com>">
+        <meta name="keywords" content="Shared list, Checklist, realtime list, firebase, javascript, webapp, example, sample">
+        <meta name="application-name" content="Shared Checklist">
+        <link rel="stylesheet" href="css/normalize.min.css">
+        <link rel="stylesheet" href="css/main.css">
+    </head>
+    <body>
+        <header>
+            <h1>
+                <a href="https://firebase.google.com" target="_blank">Firebase</a>
+                Realtime Database example - Shared Checklist
+            </h1>
+        </header>
+        <div role="main">
+            <form action="" id="new-list" role="form">
+                <input type="text" name="name" id="name" placeholder="List name">
+                <input type="submit" value="Create New List">
+            </form>
+            <div>
+                <p class="meta right">
+                    <a href="javascript:;" id="share">share</a>
+                    &nbsp;<a href="javascript:;" id="remove">remove</a>
+                </p>
+                <h2>
+                    <span id="list-name">Loading...</span>
+                </h2>
+                <p class="meta hide" id="share-link">
+                    Share &longrightarrow;<code id="list-url"></code>
+                </p>
+                <hr>
+                <ul id="list-items"></ul>
+                <form action="" id="new-item" role="form">
+                    <input type="text" name="item" id="item" placeholder="New item">
+                    <input type="submit" value="Add">
+                </form>
+                <br>
+                <p class="meta">
+                    &blacktriangleright;<span id="item-count">0</span>
+                    items in list. <br>
+                    &blacktriangleright;Total <span id="user-count">0</span>
+                    users are viewing this list right now.
+
+                </p>
+            </div>
+        </div>
+        <p class="notice">&nwnear;It's a public demo. People may create lot of lists to test things. So, if you see all lists deleted suddenly, may be I've cleared the database. Please don't worry and start creating lists again.</p>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase.js"></script>
+
+        <script src="js/config.js"></script>
+        <script src="js/main.js"></script>
+        <script>
+            $(document).ready(function() {
+
+                firebase.initializeApp(config.firebase);
+                db = firebase.database();
+
+                roomName = 'Game';
+                room = db.ref("gatherings/" + roomName);
+                user = room.push();
+
+                myName = 'Anonymous - ' + randomName();
+
+                // Add user to presence list when online.
+                var presenceRef = db.ref(".info/connected");
+                presenceRef.on("value", function(snap) {
+                    if (snap.val()) {
+                        user.onDisconnect().remove();
+                        user.set(myName);
+                    }
+                });
+
+                room.on("value", function(snap) {
+                    $('#user-count').text(snap.numChildren());
+                });
+            });
+        </script>
+    </body>
+</html>

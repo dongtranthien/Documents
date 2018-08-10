@@ -9,39 +9,17 @@
         <meta name="author" content="Anis uddin Ahmad <anis.programmer@gmail.com>">
         <meta name="keywords" content="Shared list, Checklist, realtime list, firebase, javascript, webapp, example, sample">
         <meta name="application-name" content="Shared Checklist">
-        <link rel="stylesheet" href="css/normalize.min.css">
-        <link rel="stylesheet" href="css/main.css">
+
     </head>
     <body>
-        <header>
-            <h1>
-                <a href="https://firebase.google.com" target="_blank">Firebase</a>
-                Realtime Database example - Shared Checklist
-            </h1>
-        </header>
+
         <div role="main">
             <form action="" id="new-list" role="form">
                 <input type="text" name="name" id="name" placeholder="List name">
                 <input type="submit" value="Create New List">
             </form>
             <div>
-                <p class="meta right">
-                    <a href="javascript:;" id="share">share</a>
-                    &nbsp;<a href="javascript:;" id="remove">remove</a>
-                </p>
-                <h2>
-                    <span id="list-name">Loading...</span>
-                </h2>
-                <p class="meta hide" id="share-link">
-                    Share &longrightarrow;<code id="list-url"></code>
-                </p>
-                <hr>
-                <ul id="list-items"></ul>
-                <form action="" id="new-item" role="form">
-                    <input type="text" name="item" id="item" placeholder="New item">
-                    <input type="submit" value="Add">
-                </form>
-                <br>
+               
                 <p class="meta">
                     &blacktriangleright;<span id="item-count">0</span>
                     items in list. <br>
@@ -55,10 +33,19 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
         <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase.js"></script>
 
-        <script src="js/config.js"></script>
-        <script src="js/main.js"></script>
         <script>
+			var config = {
+				firebase: {
+					apiKey: "AIzaSyBeOs9pEuf4dDRLoiPdBdYXJQOCjk_oljk",
+					authDomain: "project1-83ca1.firebaseapp.com",
+					databaseURL: "https://project1-83ca1.firebaseio.com"
+				}
+			};
+			var randomName = function () {
+				return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
+			};
             $(document).ready(function() {
+			
 
                 firebase.initializeApp(config.firebase);
                 db = firebase.database();
@@ -66,6 +53,41 @@
                 roomName = 'Game';
                 room = db.ref("gatherings/" + roomName);
                 user = room.push();
+				
+				parameter = db.ref("parameter")				
+				par = parameter.push();
+				key = par.key;
+				console.log(key);
+				par.set({x:10});
+				
+				parameter.on("value", function(snap){
+					var data = snap.val();
+					console.log('parameter ON');
+					console.log(snap.key);
+					console.log(data);
+					//console.log(typeof(data));
+				});
+				
+				function loaddat(){
+					var callback = function(snap){
+						var data = snap.val();
+						console.log('Load dat');
+						console.log(snap.key);
+						console.log(data.x);						
+					}
+					
+					db.ref('/parameter/').limitToLast(12).on('child_added',callback);
+					db.ref('/parameter/').limitToLast(12).on('child_changed',callback);
+				}
+				
+				loaddat();
+				
+				function increase(){
+					console.log('increase');
+				}
+				
+				setInterval(increase, 100);
+				
 
                 myName = 'Anonymous - ' + randomName();
 
@@ -74,6 +96,7 @@
                 presenceRef.on("value", function(snap) {
                     if (snap.val()) {
                         user.onDisconnect().remove();
+						par.onDisconnect().remove();
                         user.set(myName);
                     }
                 });

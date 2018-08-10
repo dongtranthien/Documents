@@ -62,18 +62,18 @@
 				
 				parameter.on("value", function(snap){
 					var data = snap.val();
-					console.log('parameter ON');
-					console.log(snap.key);
-					console.log(data);
+					//console.log('parameter ON');
+					//console.log(snap.key);
+					//console.log(data);
 					//console.log(typeof(data));
 				});
 				
 				function loaddat(){
 					var callback = function(snap){
 						var data = snap.val();
-						console.log('Load dat');
-						console.log(snap.key);
-						console.log(data.x);						
+						//console.log('Load dat');
+						//console.log(snap.key);
+						//console.log(data.x);						
 					}
 					
 					db.ref('/parameter/').limitToLast(12).on('child_added',callback);
@@ -81,9 +81,11 @@
 				}
 				
 				loaddat();
-				
+				var index = 0;
 				function increase(){
-					console.log('increase');
+					index = index + 1;
+					//console.log(increase);
+					par.set({x:index});
 				}
 				
 				setInterval(increase, 100);

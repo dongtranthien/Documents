@@ -11,3 +11,5 @@
 
 Nhiều lúc sử dụng thì localhost có khi ko update, khi đó vào CMD, tìm xem cổng localhost đang sử dụng có PID gì(cột cuối cùng) rồi delete đi, lệnh xem các cổng: netstat -a -o
 Xóa port: taskkill /f /pid 5092(pid cổng cần xóa)
+
+https://www.youtube.com/watch?v=pYeNB-DX6Yc
